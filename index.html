@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stride Story</title>
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="eyebrow">Running Training Dashboard</div>
+        <h1>TrainTrack</h1>
+        <p>
+          Log your runs, rides, walks, and workouts in one clean place. This front-end app uses localStorage to save your training history so your data stays on your device even after refresh.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-grid">
+    <section class="summary-grid" aria-label="Training summary">
+      <article class="card summary-card">
+        <div class="summary-label">Total Workouts</div>
+        <div class="summary-value" id="totalWorkouts">0</div>
+        <div class="summary-note">All saved training entries</div>
+      </article>
+
+      <article class="card summary-card">
+        <div class="summary-label">Total Miles</div>
+        <div class="summary-value" id="totalMiles">0.0</div>
+        <div class="summary-note">Distance across all entries</div>
+      </article>
+
+      <article class="card summary-card">
+        <div class="summary-label">Longest Workout</div>
+        <div class="summary-value" id="longestWorkout">0.0</div>
+        <div class="summary-note">Highest distance recorded</div>
+      </article>
+
+      <article class="card summary-card">
+        <div class="summary-label">Most Recent</div>
+        <div class="summary-value" id="recentWorkout">—</div>
+        <div class="summary-note">Latest entry by date</div>
+      </article>
+    </section>
+
+    <section class="content-grid">
+      <aside class="card panel">
+        <h2 id="formHeading">Add Workout</h2>
+        <p class="panel-intro">
+          Enter your training details below. You can edit any saved workout later.
+        </p>
+
+        <form id="workoutForm">
+          <div class="field-group">
+            <label for="workoutDate">Date</label>
+            <input type="date" id="workoutDate" required />
+          </div>
+
+          <div class="field-group">
+            <label for="workoutType">Workout Type</label>
+            <select id="workoutType" required>
+              <option value="">Select a workout type</option>
+              <option value="Easy Run">Easy Run</option>
+              <option value="Long Run">Long Run</option>
+              <option value="Tempo">Tempo</option>
+              <option value="Intervals">Intervals</option>
+              <option value="Recovery Run">Recovery Run</option>
+              <option value="Walk">Walk</option>
+              <option value="Bike">Bike</option>
+              <option value="Strength">Strength</option>
+              <option value="Rest Day">Rest Day</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="distance">Distance (miles)</label>
+              <input type="number" id="distance" min="0" step="0.01" placeholder="0.00" required inputmode="decimal"/>
+            </div>
+
+            <div class="field-group">
+              <label for="duration">Duration (minutes)</label>
+              <input type="text" id="duration" placeholder="000" min="0" required />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="effort">Effort</label>
+              <select id="effort" required>
+                <option value="">Select effort</option>
+                <option value="Very Easy">Very Easy</option>
+                <option value="Easy">Easy</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Hard">Hard</option>
+                <option value="Very Hard">Very Hard</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <label for="location">Location</label>
+              <input type="text" id="location" placeholder="location" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="notes">Notes</label>
+            <textarea id="notes" placeholder="How did the workout feel?"></textarea>
+          </div>
+
+          <div class="button-row">
+            <button type="submit" class="btn-primary" id="submitButton">Save Workout</button>
+            <button type="button" class="btn-secondary" id="cancelEditButton">Clear Form</button>
+          </div>
+
+          <p class="status" id="formStatus"></p>
+        </form>
+      </aside>
+
+      <section class="card panel">
+        <div class="toolbar">
+          <div>
+            <h2>Workout History</h2>
+            <p class="panel-intro">Review, search, filter, and manage your saved entries.</p>
+          </div>
+        </div>
+
+        <div class="toolbar-controls">
+          <input type="text" id="searchInput" placeholder="Search notes or location" />
+          <select id="filterType">
+            <option value="All">All workout types</option>
+            <option value="Easy Run">Easy Run</option>
+            <option value="Long Run">Long Run</option>
+            <option value="Tempo">Tempo</option>
+            <option value="Intervals">Intervals</option>
+            <option value="Recovery Run">Recovery Run</option>
+            <option value="Walk">Walk</option>
+            <option value="Bike">Bike</option>
+            <option value="Strength">Strength</option>
+            <option value="Rest Day">Rest Day</option>
+          </select>
+          <select id="sortBy">
+            <option value="newest">Sort by newest</option>
+            <option value="oldest">Sort by oldest</option>
+            <option value="distanceHigh">Distance high to low</option>
+            <option value="distanceLow">Distance low to high</option>
+          </select>
+        </div>
+
+        <div id="workoutList" class="workout-list" aria-live="polite"></div>
+      </section>
+    </section>
+  </main>
+
+  <p class="footer-note">TrainTrack · mhokeness &copy; 2026</p>
+
+  <script src="./js/script.js"></script>
+</body>
+</html>
