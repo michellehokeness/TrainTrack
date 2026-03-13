@@ -93,15 +93,6 @@ Technologies Used: HTML5, CSS3, JavaScript (ES6), LocalStorage API, CSS Grid & F
 
 This version of the project uses a front-end architecture without frameworks. Future versions could be implemented using React components.
 
-Project Structure
-stride-story/
-│
-├── index.html
-├── css/
-│   └── styles.css
-├── js/
-│   └── script.js
-└── README.md
 
 How to Run the Project
 
