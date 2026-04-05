@@ -11,6 +11,10 @@ import rocket3 from './assets/rocket-3.png';
 import ship1 from './assets/spaceship-1.png';
 import ship2 from './assets/spaceship-2.png';
 import ship3 from './assets/spaceship-3.png';
+import alien1 from './assets/alien-1.png';
+import alien2 from './assets/alien-2.png';
+import alien3 from './assets/alien-3.png';
+import aura from './assets/aura.png';
 
 const getLocalDate = (dateString) => {
   if (!dateString) return null;
@@ -52,6 +56,7 @@ function App() {
   const [editingWorkout, setEditingWorkout] = useState(null);
   const [isLaunching, setIsLaunching] = useState(false);
   const [launchRewardImage, setLaunchRewardImage] = useState(null);
+  const [launchRewardSize, setLaunchRewardSize] = useState(92);
   const [revealedMilestone, setRevealedMilestone] = useState(() =>
     getMilestoneFromMiles(
       getWeekMiles(
@@ -72,6 +77,10 @@ function App() {
     thisWeekMiles < 10 ? 10 : Math.ceil(thisWeekMiles / 10) * 10;
 
   const getRewardImage = (milestone) => {
+    if (milestone >= 100) return aura;
+    if (milestone >= 90) return alien3;
+    if (milestone >= 80) return alien2;
+    if (milestone >= 70) return alien1;
     if (milestone >= 60) return ship3;
     if (milestone >= 50) return ship2;
     if (milestone >= 40) return ship1;
@@ -81,10 +90,28 @@ function App() {
     return null;
   };
 
+  const getLaunchRewardSize = (milestone) => {
+    if (milestone >= 100) return 250;
+    if ([10, 40, 70].includes(milestone)) return 50;
+    if ([30, 60, 90].includes(milestone)) return 120;
+    return 92;
+  };
+
   const displayedMilestone = isLaunching
     ? revealedMilestone
     : Math.min(revealedMilestone, currentMilestone);
   const hasLandedReward = !isLaunching && displayedMilestone >= 10;
+  const milestoneGallery = Array.from(
+    { length: Math.floor(displayedMilestone / 10) },
+    (_, index) => {
+      const milestone = (index + 1) * 10;
+
+      return {
+        milestone,
+        image: getRewardImage(milestone),
+      };
+    }
+  ).filter((item) => item.image);
 
   const launchReward = (milestone) => {
     const rewardImage = getRewardImage(milestone);
@@ -93,6 +120,7 @@ function App() {
 
     setIsLaunching(true);
     setLaunchRewardImage(rewardImage);
+    setLaunchRewardSize(getLaunchRewardSize(milestone));
 
     window.scrollTo({
       top: 0,
@@ -103,6 +131,7 @@ function App() {
       setRevealedMilestone(milestone);
       setIsLaunching(false);
       setLaunchRewardImage(null);
+      setLaunchRewardSize(92);
     }, 2200);
   };
 
@@ -151,7 +180,11 @@ function App() {
     <>
       {isLaunching && launchRewardImage ? (
         <div className="viewport-rocket" aria-hidden="true">
-          <img src={launchRewardImage} alt="" />
+          <img
+            src={launchRewardImage}
+            alt=""
+            style={{ height: `${launchRewardSize}px` }}
+          />
         </div>
       ) : null}
 
@@ -163,6 +196,7 @@ function App() {
         isLaunching={isLaunching}
         showLandedReward={hasLandedReward}
         rewardImage={getRewardImage(displayedMilestone)}
+        milestoneGallery={milestoneGallery}
       />
 
       <main className="container main-grid">

@@ -8,6 +8,7 @@ function Hero({
   isLaunching = false,
   showLandedReward = false,
   rewardImage = null,
+  milestoneGallery = [],
 }) {
   return (
     <header className="hero">
@@ -26,6 +27,22 @@ function Hero({
             celebrates your progress with a fun surprise every time your weekly
             mileage hits a NEW 10-mile milestone in a single week.
           </p>
+          <span className="hero-milestone-strip">
+            {milestoneGallery.length > 0 ? (
+              milestoneGallery.map((item) => (
+                <img
+                  key={item.milestone}
+                  src={item.image}
+                  alt={`${item.milestone}-mile weekly milestone`}
+                  className="hero-milestone-thumb"
+                />
+              ))
+            ) : (
+              <span className="hero-milestone-empty">
+                Weekly milestone images will appear here.
+              </span>
+            )}
+          </span>
         </div>
 
         <div className="hero-right">
@@ -57,7 +74,7 @@ function Hero({
                   />
                 </div>
               ) : (
-                <div className="milestone-placeholder">Weekly reward zone</div>
+                <div className="milestone-placeholder">Milestone reward zone</div>
               )}
             </div>
           </div>
