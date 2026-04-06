@@ -529,12 +529,14 @@ form {
 .field-group {
   display: grid;
   gap: 0.4rem;
+  min-width: 0;
 }
 
 .field-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.8rem;
+  min-width: 0;
 }
 
 label {
@@ -546,12 +548,19 @@ input,
 select,
 textarea {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   padding: 0.85rem 0.95rem;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: #fbfdff;
   color: var(--text);
   font-size: 0.96rem;
+}
+
+input[type='date'] {
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 input:focus,
